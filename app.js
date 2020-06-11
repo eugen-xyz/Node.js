@@ -1,36 +1,19 @@
 'use strict';
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
+const express = require('express');
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes');
 
-app.use(bodyParser.json())
+const app = express();
 
-app.get('/', function(req, res) {
+app.use(bodyParser.json());
+app.use('/users', userRoutes);
 
-    res.status(200)
-        .json({ 
-            message: "That's it!"
-        })
-})
+app.get('/', (req, res) => {
 
-app.get('/secret', (req, res) => {
+    return res.json("Start with /users");
+});
 
-    res.status(401)
-        .json( {
-
-            message: "Unauthorized"
-        })
-})
-
-app.get('/instuctor/:name', function(req, res) {
-
-    res.json({
-        name: `${req.params.name}`
-    })
-})
-
-app.listen(3000, function() {
-
-    console.log('This server has started on port 3000')
+app.listen(3000, () => {
+    console.log("Server is listening to port 3000");
 })
